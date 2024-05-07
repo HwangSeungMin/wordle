@@ -38,7 +38,8 @@ function appStart() {
       const div = document.createElement("div");
       div.innerText = "Game Over";
       div.style =
-        "display:flex; justify-content:center; align-items:center; position:absolute; top:45vh; left:40vw; background-color:red; color:white; border:1px solid black; width:200px;height:50px;";
+        "display:flex; justify-content:center; align-items:center; position:absolute; top:45vh; left:40vw; background-color:red; color:white; "
+        +"border:1px solid black; width:200px;height:50px;";
       document.body.appendChild(div);
       setTimeout(() => {
         question();
@@ -51,14 +52,23 @@ function appStart() {
       const block = document.querySelector(
         `.board-column[data-index='${attempts}${i}']`
       );
-
+      
       if (block.innerText === answer[i]) {
-        block.style.background = "#6AAA64";
+        block.style.background = "#6AAA64"; 
+        document.querySelector(
+          `.keyboard-column[data-key='${answer[i]}']`
+        ).style.background = "#6AAA64"; 
         answer_cnt++;
       } else if (answer.includes(block.innerText)) {
         block.style.background = "#C9B458";
+        document.querySelector(
+          `.keyboard-column[data-key='${block.innerText}']`
+        ).style.background = "#C9B458";
       } else {
         block.style.background = "grey";
+        document.querySelector(
+          `.keyboard-column[data-key='${answer[i]}']`
+        ).style.background = "#d3d6da";
       }
     }
 
@@ -99,6 +109,26 @@ function appStart() {
       index++;
     }
   };
+  const handleKeyclick = (event) =>{
+    const clickKey = event.target.innerText;
+    const clickKeyCode = clickKey.charCodeAt(0);
+    const thisBlock = document.querySelector(
+      `.board-column[data-index='${attempts}${index}']`
+    );
+    if (clickKey === "Backspace") {
+      handleBackspace();
+    }
+    if (index === 5) {
+      if (clickKey == "Enter") {
+        handleEnterKey();
+      } else {
+        return;
+      }
+    } else if (65 <= clickKeyCode && clickKeyCode <= 90 && clickKey.length == 1) {
+      thisBlock.innerText = clickKey;
+      index++;
+    }
+  }
 
   const startTimer = () => {
     const start_time = new Date();
@@ -115,5 +145,6 @@ function appStart() {
   };
   startTimer();
   window.addEventListener("keydown", handleKeydown);
+  window.addEventListener("click", handleKeyclick);
 }
 appStart();
