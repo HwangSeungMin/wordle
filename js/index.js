@@ -55,6 +55,7 @@ function appStart() {
       
       if (block.innerText === answer[i]) {
         block.style.background = "#6AAA64"; 
+        block.classList.add('animate-scale');
         document.querySelector(
           `.keyboard-column[data-key='${answer[i]}']`
         ).style.background = "#6AAA64"; 

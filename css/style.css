@@ -1,3 +1,13 @@
 @import url(footer.css);
 @import url(main.css);
 @import url(header.css);
+@keyframes moving-scale {
+    from{
+        transform: scale(1.0);
+    }to{
+        transform: scale(0.8);
+    }
+}
+.animate-scale {
+    animation: moving-scale 1s infinite alternate; 
+  }
